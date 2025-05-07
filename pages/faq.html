@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkLite - Frequently Asked Questions</title>
+    <style>
+/* General Styling */
+:root {
+    --primary-color: #4a6cf7;
+    --primary-hover: #3a57d7;
+    --text-color: #333;
+    --text-light: #64748b;
+    --text-dark: #1e293b;
+    --text-white: #ffffff;
+    --bg-light: #f8f9fa;
+    --bg-white: #ffffff;
+    --border-color: rgba(255,255,255,0.1);
+    --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+    --shadow-md: 0 3px 10px rgba(0,0,0,0.05);
+    --shadow-lg: 0 5px 15px rgba(0,0,0,0.05);
+    --transition: all 0.3s ease;
+    --border-radius-sm: 4px;
+    --border-radius-md: 6px;
+    --border-radius-lg: 8px;
+    --border-radius-xl: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styling */
+header {
+    background-color: var(--bg-white);
+    box-shadow: var(--shadow-sm);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.logo svg {
+    margin-right: 8px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 30px;
+}
+
+nav ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+nav ul li a svg {
+    margin-right: 6px;
+}
+
+nav ul li a:hover {
+    color: var(--primary-color);
+}
+
+/* Make navigation responsive */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+    }
+    
+    .logo {
+        margin-bottom: 15px;
+    }
+    
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    nav ul li {
+        margin: 5px 15px;
+    }
+}
+
+/* FAQ Section Styling */
+.faq-section {
+    padding: 60px 0;
+}
+
+.faq-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.faq-section p {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 1.125rem;
+    color: var(--text-light);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* FAQ Accordion */
+.faq-accordion {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 15px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 20px 25px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.faq-question:after {
+    content: '+';
+    font-size: 1.375rem;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.faq-answer {
+    padding: 0 25px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-answer p {
+    margin: 0;
+    text-align: left;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.faq-item.active .faq-answer {
+    padding: 0 25px 20px;
+    max-height: 1000px;
+}
+
+.faq-item.active .faq-question:after {
+    content: '−';
+    transform: rotate(0deg);
+}
+
+/* Still Have Questions Section */
+.still-questions {
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius-xl);
+    padding: 40px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    max-width: 800px;
+    margin: 60px auto 0;
+}
+
+.still-questions h2 {
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+}
+
+.still-questions p {
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    padding: 12px 30px;
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.contact-button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    background-color: var(--text-dark);
+    color: var(--text-white);
+    padding: 60px 0 30px;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 30px;
+}
+
+.footer-column h4 {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: var(--text-white);
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-column ul li a:hover {
+    color: var(--text-white);
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons a {
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 1.25rem;
+}
+
+.subscribe {
+    margin-top: 20px;
+}
+
+.subscribe form {
+    display: flex;
+    max-width: 400px;
+}
+
+.subscribe input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+    outline: none;
+}
+
+.subscribe button {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.subscribe button:hover {
+    background-color: var(--primary-hover);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+    color: #cbd5e1;
+    font-size: 0.875rem;
+}
+
+/* Additional responsive adjustments */
+@media (max-width: 576px) {
+    .faq-section h1 {
+        font-size: 2rem;
+    }
+    
+    .still-questions {
+        padding: 30px 20px;
+    }
+    
+    .faq-question {
+        padding: 15px 20px;
+        font-size: 1rem;
+    }
+    
+    .faq-item.active .faq-answer {
+        padding: 0 20px 15px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+  <header>
+    <div class="container nav-container">
+      <a href="/index.html" class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+        LinkLite
+      </a>
+      <nav>
+        <ul>
+          <li>
+            <a href="help-center.html">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              Help Center
+            </a>
+          </li>
+          <li>
+            <a href="faq.html">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+              FAQ
+            </a>
+          </li>
+          <li>
+            <a href="contact.html">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              Contact Us
+            </a>
+          </li>
+          <li>
+            <a href="privacy-policy.html">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              Privacy Policy
+            </a>
+          </li>
+          <li>
+            <a href="terms-of-service.html">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              Terms of Service
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+    <!-- FAQ Content -->
+    <section class="faq-section">
+        <div class="container">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to the most commonly asked questions about LinkLite and our URL shortening service.</p>
+            
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <div class="faq-question">What is LinkLite?</div>
+                    <div class="faq-answer">
+                        <p>LinkLite is a modern URL shortening service that helps you transform long, unwieldy URLs into clean, compact, and easy-to-share links. Our service operates entirely client-side, ensuring your data remains private and secure.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How does LinkLite work?</div>
+                    <div class="faq-answer">
+                        <p>LinkLite uses advanced algorithms to transform your long URLs into short links instantly. Simply paste your long URL into our shortener field, click the "Shorten" button, and your new short link is ready to be copied and shared anywhere.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Is LinkLite free to use?</div>
+                    <div class="faq-answer">
+                        <p>Yes, LinkLite is completely free to use! We believe in providing essential tools without barriers, so you can shorten as many URLs as you need without any cost.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Where are my shortened links stored?</div>
+                    <div class="faq-answer">
+                        <p>LinkLite stores your shortened links directly in your browser's local storage. This means your links remain private on your device and aren't stored on our servers. This enhances privacy but also means your links won't be accessible from other devices or browsers.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How long do my shortened links last?</div>
+                    <div class="faq-answer">
+                        <p>Since your links are stored in your browser's local storage, they will remain available as long as you don't clear your browser data. LinkLite doesn't impose any expiration date on your shortened links.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I customize my shortened links?</div>
+                    <div class="faq-answer">
+                        <p>Currently, LinkLite generates random short codes for your links to ensure uniqueness and security. We're considering adding custom link options in future updates, so stay tuned!</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Is there a limit to how many links I can shorten?</div>
+                    <div class="faq-answer">
+                        <p>There's no set limit to how many links you can shorten with LinkLite. However, browser local storage has capacity limitations that vary by browser. Most modern browsers provide sufficient storage for hundreds of shortened links.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I track clicks on my shortened links?</div>
+                    <div class="faq-answer">
+                        <p>Currently, LinkLite focuses on providing a simple, privacy-focused shortening service without click tracking. We're exploring ways to add analytics features while maintaining our commitment to privacy in future updates.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What happens if I clear my browser data?</div>
+                    <div class="faq-answer">
+                        <p>If you clear your browser data, including local storage, your shortened links will be deleted. We recommend exporting your important links before clearing browser data, a feature we're planning to add soon.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Which browsers are compatible with LinkLite?</div>
+                    <div class="faq-answer">
+                        <p>LinkLite works with all modern browsers including Chrome, Firefox, Safari, and Edge. The service relies on local storage, which is supported by all major browsers. For the best experience, we recommend keeping your browser updated to the latest version.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="still-questions">
+                <h2>Still Have Questions?</h2>
+                <p>Can't find the answer you're looking for? Feel free to reach out to our support team for assistance.</p>
+                <a href="contact.html" class="contact-button">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                © 2025 LinkLite. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
