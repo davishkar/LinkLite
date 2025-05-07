@@ -1,5 +1,17 @@
-// In-memory URL mappings instead of localStorage
-const urlMappings = {};
+// Initialize localStorage if not already set
+if (!localStorage.getItem('urlMappings')) {
+    localStorage.setItem('urlMappings', JSON.stringify({}));
+}
+
+// Function to get URL mappings from localStorage
+function getUrlMappings() {
+    return JSON.parse(localStorage.getItem('urlMappings') || '{}');
+}
+
+// Function to save URL mappings to localStorage
+function saveUrlMappings(mappings) {
+    localStorage.setItem('urlMappings', JSON.stringify(mappings));
+}
 
 // Initialize particles.js
 document.addEventListener('DOMContentLoaded', function() {
@@ -125,6 +137,8 @@ function isValidUrl(url) {
 
 // Function to shorten URL
 function shortenUrl(longUrl) {
+    const urlMappings = getUrlMappings();
+    
     // Check if URL already exists in our mappings
     for (const shortId in urlMappings) {
         if (urlMappings[shortId] === longUrl) {
@@ -142,6 +156,7 @@ function shortenUrl(longUrl) {
     
     // Store the mapping
     urlMappings[shortId] = longUrl;
+    saveUrlMappings(urlMappings);
     
     return shortId;
 }
@@ -203,6 +218,25 @@ function displayShortUrl(shortId, longUrl) {
     resultsContainer.style.display = 'block';
 }
 
+// Function to load existing shortened URLs from localStorage
+function loadExistingUrls() {
+    const urlMappings = getUrlMappings();
+    const resultsContainer = document.getElementById('results-container');
+    
+    // Clear existing content
+    resultsContainer.innerHTML = '';
+    
+    // Display each stored URL
+    for (const shortId in urlMappings) {
+        displayShortUrl(shortId, urlMappings[shortId]);
+    }
+    
+    // Show results container if there are items
+    if (Object.keys(urlMappings).length > 0) {
+        resultsContainer.style.display = 'block';
+    }
+}
+
 // Event listener for the shorten button
 document.addEventListener('DOMContentLoaded', function() {
     const shortenButton = document.getElementById('shorten-button');
@@ -224,6 +258,9 @@ document.addEventListener('DOMContentLoaded', function() {
             longUrlInput.value = '';
         });
     }
+    
+    // Load existing URLs
+    loadExistingUrls();
 });
 
 // Mobile menu toggle
@@ -244,7 +281,10 @@ window.addEventListener('load', checkHash);
 
 function checkHash() {
     const hash = window.location.hash.substring(1);
-    if (hash && urlMappings[hash]) {
-        window.location.href = urlMappings[hash];
+    if (hash) {
+        const urlMappings = getUrlMappings();
+        if (urlMappings[hash]) {
+            window.location.href = urlMappings[hash];
+        }
     }
 }

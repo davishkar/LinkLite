@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinkLite - Modern URL Shortener</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="app.css">
+    <meta name="description" content="LinkLite - A fast and simple URL shortener to create short links from long URLs">
 </head>
 
 <body>
@@ -20,10 +24,9 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="#features">Features</a></li>
-                <!-- <li><a href="#testimonials">Testimonials</a></li> -->
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="mobile-menu-btn">☰</button>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
         </div>
     </nav>
 
@@ -38,7 +41,7 @@
             <div class="url-shortener">
                 <div class="input-group">
                     <input type="text" class="url-input" id="long-url-input" placeholder="Paste a long URL here..."
-                        autocomplete="off">
+                        autocomplete="off" aria-label="Long URL input">
                     <button class="shorten-btn" id="shorten-button">Shorten</button>
                 </div>
 
@@ -59,19 +62,19 @@
             <div class="steps-container">
                 <div class="step-card">
                     <div class="step-number">1</div>
-                    <h3>Paste Your URL</h3>
+                    <h3 data-text="Paste Your URL">Paste Your URL</h3>
                     <p>Simply copy your long URL and paste it into our shortener input field. We accept URLs from any
                         valid website.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">2</div>
-                    <h3>Click Shorten</h3>
+                    <h3 data-text="Click Shorten">Click Shorten</h3>
                     <p>Hit the shorten button and our advanced algorithm will instantly transform your long URL into a
                         compact, shareable link.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">3</div>
-                    <h3>Share Anywhere</h3>
+                    <h3 data-text="Share Anywhere">Share Anywhere</h3>
                     <p>Copy your new short link with a single click and share it on social media, email, messages, or
                         anywhere else you need.</p>
                 </div>
@@ -91,96 +94,35 @@
                         time.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Detailed Analytics</h3>
-                    <p>Track clicks, geographic data, referrers, and user devices for every shortened link.</p>
+                    <div class="feature-icon">🔍</div>
+                    <h3>Browser Storage</h3>
+                    <p>Your shortened links are saved directly in your browser, making them instantly accessible whenever you need them.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
-                    <h3>Secure & Reliable</h3>
-                    <p>All links are encrypted and protected, with 99.9% uptime guarantee for your peace of mind.</p>
+                    <h3>Secure & Private</h3>
+                    <p>All links are stored locally on your device, ensuring your data remains private and secure.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔗</div>
-                    <h3>Custom URLs</h3>
-                    <p>Create branded, memorable links that reflect your business or content.</p>
+                    <div class="feature-icon">💻</div>
+                    <h3>No Server Required</h3>
+                    <p>Our client-side solution works without any backend, making it simple, fast, and reliable.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <!-- <section class="testimonials" id="testimonials">
-        <div class="container">
-            <h2 class="section-title">What People Say</h2>
-            <div class="testimonial-container">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        "LinkLite completely transformed our marketing campaigns. The analytics data helped us optimize
-                        our strategy and increase click-through rates by 47%."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JD</div>
-                        <div class="author-info">
-                            <h4>Jane Doe</h4>
-                            <p>Marketing Director</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        "I've tried many URL shorteners, but LinkLite stands out with its speed and reliability. The
-                        interface is intuitive and the analytics are incredibly detailed."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MS</div>
-                        <div class="author-info">
-                            <h4>Mike Smith</h4>
-                            <p>Social Media Manager</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        "As a content creator, I need tools that are both powerful and simple. LinkLite gives me exactly
-                        what I need without any unnecessary complexity."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">AJ</div>
-                        <div class="author-info">
-                            <h4>Alex Johnson</h4>
-                            <p>Content Creator</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        "The custom URL feature is a game-changer for our brand. Our links are now consistent with our
-                        branding and get significantly more clicks."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SR</div>
-                        <div class="author-info">
-                            <h4>Sarah Reynolds</h4>
-                            <p>Brand Manager</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- Footer Section (Was missing in original) -->
+    <!-- Footer Section -->
     <footer id="contact">
         <div class="container footer-container">
             <div class="footer-column">
                 <h3>LinkLite</h3>
                 <p class="footer-description">Transform your long URLs into powerful, trackable short links with our modern URL shortener.</p>
                 <div class="social-links">
-                    <a href="#" class="social-link">f</a>
-                    <a href="#" class="social-link">t</a>
-                    <a href="#" class="social-link">in</a>
-                    <a href="#" class="social-link">ig</a>
+                    <a href="#" class="social-link" aria-label="Facebook">f</a>
+                    <a href="#" class="social-link" aria-label="Twitter">t</a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+                    <a href="#" class="social-link" aria-label="Instagram">ig</a>
                 </div>
             </div>
             <div class="footer-column">
@@ -189,7 +131,6 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#how-it-works">How It Works</a></li>
                     <li><a href="#features">Features</a></li>
-                    <!-- <li><a href="#testimonials">Testimonials</a></li> -->
                 </ul>
             </div>
             <div class="footer-column">
@@ -206,20 +147,20 @@
                 <h3>Subscribe</h3>
                 <p>Get the latest updates and offers.</p>
                 <div class="newsletter-form">
-                    <input type="email" class="newsletter-input" placeholder="Enter your email">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email" aria-label="Email for newsletter">
                     <button class="newsletter-btn">Subscribe</button>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p class="copyright">© 2025 LinkLite. All rights reserved. | Created by <a href="#">Your Company</a></p>
+            <p class="copyright">© 2025 LinkLite. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>

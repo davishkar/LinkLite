@@ -18,25 +18,34 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 16px; /* Base font size for better rem calculations */
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--midnight-blue);
     color: var(--light-gray);
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh; /* Ensures minimum height is full viewport */
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1.5rem; /* Reduced side padding */
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
     line-height: 1.2;
+    margin-bottom: 0.5em; /* Consistent heading margins */
 }
 
 a {
@@ -51,14 +60,20 @@ a:hover {
 
 button {
     cursor: pointer;
+    font-family: inherit; /* Inherits font from parent */
+}
+
+img {
+    max-width: 100%;
+    height: auto; /* Ensures images are responsive */
 }
 
 section {
-    padding: 5rem 0;
+    padding: 4rem 0; /* Consistent padding for sections */
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: clamp(1.75rem, 5vw, 2.5rem); /* Responsive font sizing */
     text-align: center;
     margin-bottom: 3rem;
     position: relative;
@@ -98,7 +113,7 @@ section {
 
 /* === Navigation === */
 .navbar {
-    padding: 1.25rem 0;
+    padding: 1rem 0;
     position: fixed;
     width: 100%;
     top: 0;
@@ -106,6 +121,7 @@ section {
     z-index: 100;
     background-color: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* For Safari */
     border-bottom: 1px solid var(--glass-border);
 }
 
@@ -117,9 +133,8 @@ section {
 
 .logo {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: var(--neon-blue);
     background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
     -webkit-background-clip: text;
     background-clip: text;
@@ -161,6 +176,7 @@ section {
     border: none;
     color: var(--white);
     font-size: 1.5rem;
+    padding: 0.5rem;
 }
 
 /* === Hero Section === */
@@ -176,16 +192,17 @@ section {
     text-align: center;
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Responsive font sizing */
     margin-bottom: 1.5rem;
     line-height: 1.2;
 }
 
 .hero p {
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 2vw, 1.25rem);
     margin-bottom: 2.5rem;
     color: var(--light-gray);
     opacity: 0.9;
@@ -204,23 +221,27 @@ section {
 .url-shortener {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
     border: 1px solid var(--glass-border);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 1.5rem;
     box-shadow: var(--glass-shadow);
     max-width: 700px;
     margin: 0 auto;
+    width: 90%; /* Ensures it's not too wide on mobile */
 }
 
 .input-group {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    flex-wrap: wrap; /* Allows wrapping on small screens */
 }
 
 .url-input {
     flex: 1;
-    padding: 1rem 1.5rem;
+    min-width: 0; /* Prevents flex items from overflowing */
+    padding: 0.875rem 1.25rem;
     border-radius: 8px;
     border: 1px solid var(--glass-border);
     background: rgba(255, 255, 255, 0.05);
@@ -241,7 +262,7 @@ section {
 }
 
 .shorten-btn {
-    padding: 0 2rem;
+    padding: 0.875rem 1.5rem;
     background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink));
     color: var(--white);
     border: none;
@@ -250,6 +271,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1rem;
     transition: all 0.3s ease;
+    min-width: 120px; /* Ensures button has minimum width */
 }
 
 .shorten-btn:hover {
@@ -270,19 +292,24 @@ section {
     border-radius: 8px;
     padding: 1rem;
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.75rem;
+    gap: 0.5rem;
 }
 
 .url-info {
     overflow: hidden;
+    flex: 1;
+    min-width: 200px; /* Minimum width for readability */
 }
 
 .short-url {
     font-weight: 600;
     color: var(--neon-blue);
     margin-bottom: 0.25rem;
+    word-break: break-all; /* Prevents overflow of long URLs */
 }
 
 .original-url {
@@ -292,7 +319,7 @@ section {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 400px;
+    max-width: 100%; /* Full width on parent */
 }
 
 .copy-btn {
@@ -303,6 +330,7 @@ section {
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .copy-btn:hover {
@@ -313,51 +341,36 @@ section {
 .how-it-works {
     background: linear-gradient(to bottom, var(--midnight-blue), var(--deep-blue));
     position: relative;
-}
-
-.section-title {
-    text-align: center;
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 4rem;
-    opacity: 1; /* Changed from 0 to 1 to ensure visibility */
-    transform: translateY(0); /* Reset transform */
-    transition: all 0.8s ease;
-}
-
-.section-title.visible {
-    opacity: 1;
-    transform: translateY(0);
+    padding: 5rem 1rem; /* Added horizontal padding */
 }
 
 .steps-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .step-card {
     background: rgba(30, 41, 59, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 1.5rem;
     position: relative;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    opacity: 1; /* Changed from 0 to 1 to ensure visibility */
-    transform: translateY(0); /* Reset transform */
-    transition: all 0.8s ease;
-}
-
-.step-card.visible {
-    opacity: 1;
-    transform: translateY(0);
+    height: 100%; /* Equal height cards */
+    display: flex;
+    flex-direction: column;
 }
 
 .step-number {
     position: absolute;
     top: -20px;
     right: -10px;
-    font-size: 8rem;
+    font-size: 6rem; /* Slightly smaller for better mobile display */
     font-weight: 700;
     font-family: 'Space Grotesk', sans-serif;
     opacity: 0.1;
@@ -365,14 +378,14 @@ section {
 }
 
 .step-card h3 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin-bottom: 1rem;
     background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    /* Add fallback */
     position: relative;
+    z-index: 1;
 }
 
 .step-card h3::before {
@@ -387,40 +400,39 @@ section {
 .step-card p {
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
+    flex-grow: 1; /* Makes content fill available space */
 }
-
 
 /* === Features Section === */
 .features {
     background: var(--midnight-blue);
     position: relative;
+    padding: 5rem 1rem; /* Added horizontal padding */
 }
 
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .feature-card {
     text-align: center;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
     border-radius: 12px;
     background: rgba(30, 41, 59, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: all 0.3s ease;
-    opacity: 1; /* Changed from 0 to 1 to ensure visibility */
-    transform: translateY(0); /* Reset transform */
-    transition: all 0.8s ease;
-}
-
-.feature-card.visible {
-    opacity: 1;
-    transform: translateY(0);
+    height: 100%; /* Equal height cards */
+    display: flex;
+    flex-direction: column;
 }
 
 .feature-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     border-color: rgba(139, 92, 246, 0.3);
 }
@@ -446,29 +458,37 @@ section {
 .feature-card p {
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
+    flex-grow: 1; /* Makes content fill available space */
 }
-
 
 /* === Testimonials Section === */
 .testimonials {
     background-color: var(--deep-blue);
     position: relative;
     overflow: hidden;
+    padding: 5rem 1rem; /* Added horizontal padding */
 }
 
 .testimonial-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .testimonial-card {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
     border: 1px solid var(--glass-border);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 1.5rem;
     transition: all 0.3s ease;
+    height: 100%; /* Equal height cards */
+    display: flex;
+    flex-direction: column;
 }
 
 .testimonial-card:hover {
@@ -480,15 +500,16 @@ section {
     font-style: italic;
     margin-bottom: 1.5rem;
     position: relative;
+    flex-grow: 1; /* Makes content fill available space */
 }
 
 .testimonial-content::before {
     content: '"';
-    font-size: 4rem;
+    font-size: 3rem; /* Slightly smaller for better mobile display */
     font-family: 'Georgia', serif;
     position: absolute;
-    top: -2rem;
-    left: -1rem;
+    top: -1.5rem;
+    left: -0.5rem;
     opacity: 0.2;
     color: var(--neon-purple);
 }
@@ -500,8 +521,8 @@ section {
 }
 
 .author-avatar {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
     display: flex;
@@ -509,26 +530,27 @@ section {
     justify-content: center;
     color: var(--white);
     font-weight: 600;
+    font-size: 0.875rem;
 }
 
 .author-info h4 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 0.25rem;
 }
 
 .author-info p {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     opacity: 0.8;
 }
 
 /* === Footer Section === */
-/* Footer Styles */
 footer {
     background-color: var(--midnight-blue);
     color: var(--light-gray);
-    padding: 4rem 0 2rem;
+    padding: 3rem 1rem 1.5rem;
     position: relative;
     overflow: hidden;
+    margin-top: auto; /* Pushes footer to bottom */
 }
 
 footer::before {
@@ -543,20 +565,17 @@ footer::before {
 }
 
 .footer-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
     position: relative;
     z-index: 1;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
 }
 
 .footer-column {
-    flex: 1;
-    min-width: 250px;
+    min-width: unset; /* Remove fixed min-width */
 }
 
 .footer-column h3 {
@@ -588,19 +607,21 @@ footer::before {
 
 .social-links {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     margin-top: 1.5rem;
+    flex-wrap: wrap; /* Allow wrapping if needed */
 }
 
 .social-link {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
     border-radius: 50%;
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
     border: 1px solid var(--glass-border);
     color: var(--white);
     font-size: 1rem;
@@ -632,6 +653,7 @@ footer::before {
     transition: all 0.2s ease;
     position: relative;
     padding-left: 0;
+    display: inline-block; /* Better touch targets */
 }
 
 .footer-links a::before {
@@ -655,17 +677,20 @@ footer::before {
 .newsletter-form {
     display: flex;
     margin-top: 1rem;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 0.5rem;
 }
 
 .newsletter-input {
     flex: 1;
+    min-width: 150px; /* Minimum width for input */
     padding: 0.75rem 1rem;
     border: none;
     background: var(--deep-blue);
     color: var(--white);
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
-    border-radius: 4px 0 0 4px;
+    border-radius: 4px;
     border: 1px solid var(--glass-border);
 }
 
@@ -683,8 +708,8 @@ footer::before {
     background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink));
     color: var(--white);
     border: none;
-    padding: 0 1.5rem;
-    border-radius: 0 4px 4px 0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     cursor: pointer;
@@ -693,13 +718,13 @@ footer::before {
 
 .newsletter-btn:hover {
     background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-    transform: translateX(2px);
+    transform: translateY(-2px);
 }
 
 .footer-bottom {
-    margin-top: 4rem;
+    margin-top: 3rem;
     text-align: center;
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     z-index: 1;
@@ -721,119 +746,18 @@ footer::before {
     color: var(--neon-purple);
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .footer-container {
-        gap: 2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        gap: 3rem;
-    }
-    
-    .footer-column {
-        width: 100%;
-    }
-    
-    .newsletter-form {
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    footer {
-        padding: 3rem 0 1.5rem;
-    }
-    
-    .footer-bottom {
-        margin-top: 2rem;
-    }
-}
-/* Responsive Styles */
-@media (max-width: 992px) {
-    .hero h1 {
-        font-size: 2.75rem;
-    }
-    
-    .section-title {
-        font-size: 2.25rem;
-    }
-    
-    .steps-container {
-        flex-direction: column;
-        max-width: 500px;
-        margin: 0 auto;
-    }
-}
-
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-    }
-    
-    .mobile-menu-btn {
-        display: block;
-    }
-    
-    .hero h1 {
-        font-size: 2.25rem;
-    }
-    
-    .hero p {
-        font-size: 1.1rem;
-    }
-    
-    .input-group {
-        flex-direction: column;
-    }
-    
-    .shorten-btn {
-        width: 100%;
-        padding: 1rem;
-    }
-    
-    .footer-container {
-        flex-direction: column;
-        gap: 3rem;
-    }
-    
-    .footer-column {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero h1 {
-        font-size: 1.75rem;
-    }
-    
-    .section-title {
-        font-size: 1.75rem;
-    }
-    
-    .url-shortener {
-        padding: 1.5rem;
-    }
-    
-    .feature-card, .testimonial-card, .step-card {
-        padding: 1.5rem;
-    }
-}
-
-
-/* Mobile navigation styles */
+/* === Mobile Navigation and Responsive Adjustments === */
+/* Mobile menu toggle functionality */
 @media (max-width: 768px) {
     .nav-links {
         position: fixed;
-        top: 70px; /* Adjust based on your navbar height */
+        top: 70px; /* Adjust based on navbar height */
         left: 0;
         width: 100%;
         flex-direction: column;
         background-color: rgba(15, 23, 42, 0.95);
         backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px); /* For Safari */
         padding: 1rem 0;
         gap: 0;
         transform: translateY(-150%);
@@ -856,8 +780,174 @@ footer::before {
         padding: 1rem 0;
     }
     
+    .nav-links a::after {
+        display: none; /* Hide underline animation on mobile */
+    }
+    
     .mobile-menu-btn {
         display: block;
         cursor: pointer;
+    }
+}
+
+/* Responsive breakpoints */
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+    .container {
+        padding: 0 2rem;
+    }
+    
+    .url-shortener {
+        padding: 2.5rem;
+    }
+}
+
+/* Large devices (desktops) */
+@media (max-width: 1199px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+/* Medium devices (tablets) */
+@media (max-width: 991px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    section {
+        padding: 4rem 0;
+    }
+    
+    .hero h1 {
+        font-size: clamp(1.75rem, 4vw, 3rem);
+    }
+}
+
+/* Small devices (landscape phones) */
+@media (max-width: 767px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    section {
+        padding: 3rem 0;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .url-input {
+        width: 100%;
+        border-radius: 8px;
+    }
+    
+    .shorten-btn {
+        width: 100%;
+        border-radius: 8px;
+        margin-top: 0.5rem;
+    }
+    
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .copy-btn {
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+}
+
+/* Extra small devices (phones) */
+@media (max-width: 575px) {
+    html {
+        font-size: 14px; /* Slightly smaller base font size */
+    }
+    
+    .container {
+        padding: 0 1rem;
+    }
+    
+    section {
+        padding: 2.5rem 0;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .url-shortener {
+        padding: 1.25rem;
+    }
+    
+    .feature-card, .testimonial-card, .step-card {
+        padding: 1.25rem;
+    }
+    
+    .footer-container {
+        gap: 2rem;
+    }
+    
+    .footer-column h3 {
+        font-size: 1.1rem;
+    }
+}
+
+/* === Accessibility Improvements === */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+a:focus,
+button:focus,
+input:focus {
+    outline: 2px solid var(--neon-purple);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .gradient-text {
+        -webkit-text-fill-color: CanvasText;
+        color: CanvasText;
+    }
+    
+    button {
+        border: 1px solid ButtonText;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .navbar, 
+    .footer, 
+    .particles {
+        display: none;
+    }
+    
+    .container {
+        max-width: 100%;
     }
 }

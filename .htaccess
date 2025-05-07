@@ -1,0 +1,4 @@
+# .htaccess
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)$ redirect.php?code=$1 [L]
