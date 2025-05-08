@@ -7,7 +7,9 @@
     <title>LinkLite - Modern URL Shortener</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="app.css">
     <meta name="description" content="LinkLite - A fast and simple URL shortener to create short links from long URLs">
 </head>
@@ -35,7 +37,8 @@
         <div class="container hero-content">
             <h1>Transform Long URLs into <span class="gradient-text">Powerful Short Links</span></h1>
             <p>LinkLite helps you turn lengthy website addresses into clean, memorable, and trackable short links in
-                <span class="typed-container"><span class="typed-text" id="typed-text"></span></span></p>
+                <span class="typed-container"><span class="typed-text" id="typed-text"></span></span>
+            </p>
 
             <!-- URL Shortener Form -->
             <div class="url-shortener">
@@ -52,6 +55,18 @@
                     </div>
                 </div>
             </div>
+            <!-- Add this button somewhere in your existing HTML, for example after the shorten button -->
+            <button id="history-button" type="button">
+                <i class="fas fa-history"></i> View History
+            </button>
+
+            <!-- Make sure you have the results container somewhere in your HTML -->
+            <div id="results-container" class="results-container">
+                <!-- Link history will be displayed here -->
+            </div>
+
+            <!-- Make sure you have Font Awesome included in your HTML head section -->
+            <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
         </div>
     </section>
 
@@ -96,7 +111,8 @@
                 <div class="feature-card">
                     <div class="feature-icon">🔍</div>
                     <h3>Browser Storage</h3>
-                    <p>Your shortened links are saved directly in your browser, making them instantly accessible whenever you need them.</p>
+                    <p>Your shortened links are saved directly in your browser, making them instantly accessible
+                        whenever you need them.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
@@ -117,7 +133,8 @@
         <div class="container footer-container">
             <div class="footer-column">
                 <h3>LinkLite</h3>
-                <p class="footer-description">Transform your long URLs into powerful, trackable short links with our modern URL shortener.</p>
+                <p class="footer-description">Transform your long URLs into powerful, trackable short links with our
+                    modern URL shortener.</p>
                 <div class="social-links">
                     <a href="#" class="social-link" aria-label="Facebook">f</a>
                     <a href="#" class="social-link" aria-label="Twitter">t</a>
@@ -141,13 +158,14 @@
                     <li><a href="pages/contact.html">Contact Us</a></li>
                     <li><a href="pages/privacy-policy.html">Privacy Policy</a></li>
                     <li><a href="pages/terms-of-service.html">Terms of Service</a></li>
-                </ul>                
+                </ul>
             </div>
             <div class="footer-column">
                 <h3>Subscribe</h3>
                 <p>Get the latest updates and offers.</p>
                 <div class="newsletter-form">
-                    <input type="email" class="newsletter-input" placeholder="Enter your email" aria-label="Email for newsletter">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email"
+                        aria-label="Email for newsletter">
                     <button class="newsletter-btn">Subscribe</button>
                 </div>
             </div>

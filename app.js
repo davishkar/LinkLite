@@ -141,7 +141,7 @@ function shortenUrl(longUrl) {
     
     // Check if URL already exists in our mappings
     for (const shortId in urlMappings) {
-        if (urlMappings[shortId] === longUrl) {
+        if (urlMappings[shortId].url === longUrl) {
             return shortId;
         }
     }
@@ -154,25 +154,62 @@ function shortenUrl(longUrl) {
         shortId = generateShortId();
     }
     
-    // Store the mapping
-    urlMappings[shortId] = longUrl;
+    // Store the mapping with timestamp
+    urlMappings[shortId] = {
+        url: longUrl,
+        createdAt: new Date().toISOString(),
+        clicks: 0
+    };
     saveUrlMappings(urlMappings);
     
     return shortId;
 }
 
+// Function to delete a shortened URL
+function deleteUrl(shortId) {
+    const urlMappings = getUrlMappings();
+    
+    if (urlMappings[shortId]) {
+        delete urlMappings[shortId];
+        saveUrlMappings(urlMappings);
+        return true;
+    }
+    
+    return false;
+}
+
+// Function to format date
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+}
+
 // Function to display the shortened URL
-function displayShortUrl(shortId, longUrl) {
+function displayShortUrl(shortId, urlData, number = null) {
     const shortUrl = `${window.location.origin}${window.location.pathname}#${shortId}`;
     const resultsContainer = document.getElementById('results-container');
+    const longUrl = urlData.url;
     
     // Create result item
     const resultItem = document.createElement('div');
     resultItem.className = 'result-item';
+    resultItem.dataset.shortId = shortId;
     
     // URL info container
     const urlInfo = document.createElement('div');
     urlInfo.className = 'url-info';
+    
+    // Add number badge if provided
+    if (number !== null) {
+        const numberBadge = document.createElement('div');
+        numberBadge.className = 'number-badge';
+        numberBadge.textContent = number;
+        urlInfo.appendChild(numberBadge);
+    }
+    
+    // URL details container
+    const urlDetails = document.createElement('div');
+    urlDetails.className = 'url-details';
     
     // Short URL
     const shortUrlElem = document.createElement('div');
@@ -183,22 +220,42 @@ function displayShortUrl(shortId, longUrl) {
     const originalUrlElem = document.createElement('div');
     originalUrlElem.className = 'original-url';
     originalUrlElem.textContent = longUrl.length > 50 ? longUrl.substring(0, 50) + '...' : longUrl;
+    originalUrlElem.title = longUrl; // Show full URL on hover
     
-    // Add to URL info
-    urlInfo.appendChild(shortUrlElem);
-    urlInfo.appendChild(originalUrlElem);
+    // Creation date
+    const dateElem = document.createElement('div');
+    dateElem.className = 'url-date';
+    dateElem.textContent = urlData.createdAt ? formatDate(urlData.createdAt) : 'Unknown date';
+    
+    // Click count
+    const clicksElem = document.createElement('div');
+    clicksElem.className = 'url-clicks';
+    clicksElem.textContent = `Clicks: ${urlData.clicks || 0}`;
+    
+    // Add to URL details
+    urlDetails.appendChild(shortUrlElem);
+    urlDetails.appendChild(originalUrlElem);
+    urlDetails.appendChild(dateElem);
+    urlDetails.appendChild(clicksElem);
+    
+    // Add details to info container
+    urlInfo.appendChild(urlDetails);
+    
+    // Button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'button-container';
     
     // Create copy button
     const copyBtn = document.createElement('button');
     copyBtn.className = 'copy-btn';
-    copyBtn.textContent = 'Copy';
+    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
     copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(shortUrl)
             .then(() => {
-                const originalText = copyBtn.textContent;
-                copyBtn.textContent = 'Copied!';
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
                 setTimeout(() => {
-                    copyBtn.textContent = originalText;
+                    copyBtn.innerHTML = originalText;
                 }, 2000);
             })
             .catch(err => {
@@ -207,9 +264,39 @@ function displayShortUrl(shortId, longUrl) {
             });
     });
     
+    // Create delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+    deleteBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to delete this shortened URL?')) {
+            if (deleteUrl(shortId)) {
+                resultItem.remove();
+                
+                // Update remaining numbers
+                const items = resultsContainer.querySelectorAll('.result-item');
+                items.forEach((item, index) => {
+                    const badge = item.querySelector('.number-badge');
+                    if (badge) {
+                        badge.textContent = index + 1;
+                    }
+                });
+                
+                // Hide container if no more items
+                if (resultsContainer.querySelectorAll('.result-item').length === 0) {
+                    resultsContainer.style.display = 'none';
+                }
+            }
+        }
+    });
+    
+    // Add buttons to container
+    buttonContainer.appendChild(copyBtn);
+    buttonContainer.appendChild(deleteBtn);
+    
     // Add to result item
     resultItem.appendChild(urlInfo);
-    resultItem.appendChild(copyBtn);
+    resultItem.appendChild(buttonContainer);
     
     // Add to results container
     resultsContainer.insertBefore(resultItem, resultsContainer.firstChild);
@@ -226,14 +313,64 @@ function loadExistingUrls() {
     // Clear existing content
     resultsContainer.innerHTML = '';
     
+    // Create history header
+    const historyHeader = document.createElement('div');
+    historyHeader.className = 'history-header';
+    
+    const historyTitle = document.createElement('h3');
+    historyTitle.textContent = 'Your Link History';
+    
+    const clearAllBtn = document.createElement('button');
+    clearAllBtn.className = 'clear-all-btn';
+    clearAllBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Clear All';
+    clearAllBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to delete all your shortened URLs? This cannot be undone.')) {
+            localStorage.setItem('urlMappings', JSON.stringify({}));
+            resultsContainer.innerHTML = '';
+            resultsContainer.style.display = 'none';
+        }
+    });
+    
+    historyHeader.appendChild(historyTitle);
+    historyHeader.appendChild(clearAllBtn);
+    
+    resultsContainer.appendChild(historyHeader);
+    
+    // Prepare data for sorting
+    const urlEntries = Object.entries(urlMappings).map(([shortId, data]) => ({
+        shortId,
+        data
+    }));
+    
+    // Sort by creation date (newest first)
+    urlEntries.sort((a, b) => {
+        const dateA = a.data.createdAt ? new Date(a.data.createdAt) : new Date(0);
+        const dateB = b.data.createdAt ? new Date(b.data.createdAt) : new Date(0);
+        return dateB - dateA;
+    });
+    
+    // Add counter for numbering
+    let counter = 1;
+    
     // Display each stored URL
-    for (const shortId in urlMappings) {
-        displayShortUrl(shortId, urlMappings[shortId]);
-    }
+    urlEntries.forEach(entry => {
+        displayShortUrl(entry.shortId, entry.data, counter++);
+    });
     
     // Show results container if there are items
-    if (Object.keys(urlMappings).length > 0) {
+    if (urlEntries.length > 0) {
         resultsContainer.style.display = 'block';
+    }
+}
+
+// Toggle history visibility
+function toggleHistory() {
+    const resultsContainer = document.getElementById('results-container');
+    
+    if (resultsContainer.style.display === 'none') {
+        loadExistingUrls();
+    } else {
+        resultsContainer.style.display = 'none';
     }
 }
 
@@ -252,15 +389,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             const shortId = shortenUrl(longUrl);
-            displayShortUrl(shortId, longUrl);
+            displayShortUrl(shortId, getUrlMappings()[shortId]);
             
             // Clear the input field
             longUrlInput.value = '';
         });
     }
     
-    // Load existing URLs
-    loadExistingUrls();
+    // Add event listener for the history button
+    const historyButton = document.getElementById('history-button');
+    if (historyButton) {
+        historyButton.addEventListener('click', toggleHistory);
+    }
+    
+    // Load existing URLs if history is visible by default
+    const resultsContainer = document.getElementById('results-container');
+    if (resultsContainer && resultsContainer.style.display !== 'none') {
+        loadExistingUrls();
+    }
 });
 
 // Mobile menu toggle
@@ -284,7 +430,12 @@ function checkHash() {
     if (hash) {
         const urlMappings = getUrlMappings();
         if (urlMappings[hash]) {
-            window.location.href = urlMappings[hash];
+            // Increment click count
+            urlMappings[hash].clicks = (urlMappings[hash].clicks || 0) + 1;
+            saveUrlMappings(urlMappings);
+            
+            // Redirect
+            window.location.href = urlMappings[hash].url;
         }
     }
 }

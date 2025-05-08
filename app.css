@@ -746,6 +746,217 @@ footer::before {
     color: var(--neon-purple);
 }
 
+/* Add this CSS to your existing styles */
+
+/* History header styles */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.history-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin: 0;
+}
+
+/* Clear all button */
+.clear-all-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.clear-all-btn:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.clear-all-btn:active {
+    transform: translateY(0);
+}
+
+/* Result item enhancements */
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 16px;
+    transition: all 0.2s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.result-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* URL info with numbering */
+.url-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-grow: 1;
+    max-width: 75%;
+}
+
+.number-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: #8b5cf6;
+    color: white;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.url-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.short-url {
+    font-weight: 600;
+    color: #8b5cf6;
+    margin-bottom: 4px;
+    font-size: 0.875rem;
+}
+
+.original-url {
+    color: #4b5563;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.url-date, .url-clicks {
+    color: #6b7280;
+    font-size: 0.75rem;
+}
+
+/* Button container */
+.button-container {
+    display: flex;
+    gap: 8px;
+}
+
+/* Button styles */
+.copy-btn, .delete-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.copy-btn {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.copy-btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.delete-btn {
+    background-color: #ef4444;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+/* History toggle button */
+#history-button {
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+#history-button:hover {
+    background-color: #7c3aed;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#history-button:active {
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .url-info {
+        margin-bottom: 12px;
+        max-width: 100%;
+    }
+    
+    .button-container {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .button-container {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .copy-btn, .delete-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 /* === Mobile Navigation and Responsive Adjustments === */
 /* Mobile menu toggle functionality */
 @media (max-width: 768px) {
