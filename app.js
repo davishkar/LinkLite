@@ -1,7 +1,3 @@
-// We need to use URL parameters instead of localStorage for sharing
-// This will store mappings in the URL hash for immediate use
-// and in localStorage for the user's history
-
 // Initialize localStorage if not already set
 if (!localStorage.getItem('urlMappings')) {
     localStorage.setItem('urlMappings', JSON.stringify({}));
@@ -166,15 +162,7 @@ function shortenUrl(longUrl) {
     };
     saveUrlMappings(urlMappings);
     
-    // Store the mapping in the URL as a base64 encoded parameter
-    const mappingData = btoa(JSON.stringify({
-        redirectUrl: longUrl
-    }));
-    
-    return {
-        shortId: shortId,
-        mappingData: mappingData
-    };
+    return shortId;
 }
 
 // Function to delete a shortened URL
@@ -197,10 +185,8 @@ function formatDate(dateString) {
 }
 
 // Function to display the shortened URL
-function displayShortUrl(shortId, urlData, mappingData, number = null) {
-    // Create a shareable URL with the encoded mapping data
-    const shortUrl = `${window.location.origin}${window.location.pathname}#${shortId}:${mappingData}`;
-    
+function displayShortUrl(shortId, urlData, number = null) {
+    const shortUrl = `${window.location.origin}${window.location.pathname}#${shortId}`;
     const resultsContainer = document.getElementById('results-container');
     const longUrl = urlData.url;
     
@@ -368,12 +354,7 @@ function loadExistingUrls() {
     
     // Display each stored URL
     urlEntries.forEach(entry => {
-        // Create mapping data for each URL
-        const mappingData = btoa(JSON.stringify({
-            redirectUrl: entry.data.url
-        }));
-        
-        displayShortUrl(entry.shortId, entry.data, mappingData, counter++);
+        displayShortUrl(entry.shortId, entry.data, counter++);
     });
     
     // Show results container if there are items
@@ -407,8 +388,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            const result = shortenUrl(longUrl);
-            displayShortUrl(result.shortId, getUrlMappings()[result.shortId], result.mappingData);
+            const shortId = shortenUrl(longUrl);
+            displayShortUrl(shortId, getUrlMappings()[shortId]);
             
             // Clear the input field
             longUrlInput.value = '';
@@ -446,36 +427,7 @@ window.addEventListener('load', checkHash);
 
 function checkHash() {
     const hash = window.location.hash.substring(1);
-    
     if (hash) {
-        // Check if the hash contains the new format with encoded data
-        if (hash.includes(':')) {
-            // Split the hash to get shortId and mapping data
-            const [shortId, mappingData] = hash.split(':');
-            
-            try {
-                // Decode the mapping data
-                const decodedData = JSON.parse(atob(mappingData));
-                
-                // Check if there's a redirect URL in the data
-                if (decodedData && decodedData.redirectUrl) {
-                    // Increment click count if this shortId exists in localStorage
-                    const urlMappings = getUrlMappings();
-                    if (urlMappings[shortId]) {
-                        urlMappings[shortId].clicks = (urlMappings[shortId].clicks || 0) + 1;
-                        saveUrlMappings(urlMappings);
-                    }
-                    
-                    // Redirect to the original URL
-                    window.location.href = decodedData.redirectUrl;
-                    return;
-                }
-            } catch (error) {
-                console.error('Error decoding URL data:', error);
-            }
-        }
-        
-        // Fallback to the old method
         const urlMappings = getUrlMappings();
         if (urlMappings[hash]) {
             // Increment click count
